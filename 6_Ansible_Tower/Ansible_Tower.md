@@ -20,3 +20,5 @@ Anisble Tower è un orchestratore che non fa altro che utilizzare Ansible Engine
 - Controllo **RBAC** (*Role-Based Access Controls*) su gli accessi (chi può fare cosa dove)
 - **Esecuzione contemporanea** di più playbook (da cli avremo necessita di aprire più terminali)
 - Supporto ad **API REST** (quindi integrazioni con hooks di strumenti di CI/CD)
+- Dashboard **grafiche** sullo stato dei playbook eseguiti
+- Esecuzione di **Workflow** in base anche agli eventi (concatenare più playbook od eseguirne altri in base allo stato dell'ultima esecuzione)
