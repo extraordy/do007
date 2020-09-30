@@ -1,0 +1,49 @@
+---
+# tasks file for flow.myweb
+# # tasks file for extraordy.myweb
+- name: httpd must be present and updated
+  yum:
+    name: httpd
+    state: latest
+
+- name: httpd service is enabled and started
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: Firewall allows http trafic
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+
+- name: Set apache config
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    regexp: "{{ item.exp }}"
+    line: "{{ item.line }}"
+  loop:
+    - { exp: "^Listen", line: "{{ listen_port }}" }
+    - { exp: "^ServerRoot", line: "{{ server_root }}" }
+    - { exp: "^User", line: "{{ user }}" }
+    - { exp: "^Group", line: "{{ group }}" }
+
+- name: index.thtml is copied from provided file
+  tags: Index
+  copy:
+    content: |
+          Managed by Ansible! <br />
+          -------------------------------------------------------------
+          <br />
+          HOST = {{ ansible_facts['fqdn'] }} <br />
+          IP   = {{ ansible_facts['default_ipv4']['address'] }} <br />
+          DATA = {{ ansible_facts['date_time']['date'] }} <br />
+          -------------------------------------------------------------
+          <br />
+          MEMORY = {{ ansible_facts['memtotal_mb'] }} MB <br />
+          CPU    = {{ ansible_facts['processor'] }} <br />
+          DISTRO = {{ ansible_facts['distribution'] }} <br />
+          ARCH   = {{ ansible_facts['architecture'] }}
+    dest: /var/www/html/index.html
+  notify: Restart apache

@@ -1,0 +1,5 @@
+# defaults file for extraordy.myweb
+listen_port: "Listen 80"
+server_root: "ServerRoot '/etc/httpd'"
+user: "User apache"
+group: "Group apache"

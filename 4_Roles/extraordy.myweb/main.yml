@@ -1,0 +1,15 @@
+- name: Deploy myweb role
+  hosts: localhost
+  become: true
+  become_method: sudo
+
+  roles:
+    - extraordy.myweb
+
+  post_tasks:
+    - name: Check deployment result
+      shell: 'curl localhost'
+      register: result
+
+    - debug:
+        var: result.stdout

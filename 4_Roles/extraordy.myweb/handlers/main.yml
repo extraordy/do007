@@ -1,0 +1,7 @@
+---
+# handlers file for extraordy.myweb
+- name: Restart apache
+  service:
+    name: httpd
+    state: restarted
+# handlers file for flow.myweb
