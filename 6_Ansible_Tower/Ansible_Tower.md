@@ -1,6 +1,6 @@
 # Ansible Tower
 
-## Cosa manca ad Ansible?
+## Ansible Tower: Cosa manca ad Ansible?
 
 Come abbiamo visto, Ansible è un potentissimo strumento per configurare e gestire ogni parte della nostra infrastruttura però, in quanto strumento da commandline, manca effettivamente di alcune funzionalità più raffinate, fondamentali in ambienti Enterprise, come ad esempio:
 
@@ -23,3 +23,11 @@ Anisble Tower è un orchestratore che non fa altro che utilizzare Ansible Engine
 - Dashboard **grafiche** sullo stato dei playbook eseguiti
 - Esecuzione di **Workflow** in base anche agli eventi (concatenare più playbook od eseguirne altri in base allo stato dell'ultima esecuzione)
 - Sistema di **notifica integrata** dello stato del playbook (si integra con Slack, SMS, E-Mail, etc..)
+
+
+## Ansible Tower: Esiste anche la versione Community?
+
+Come ogni progetto di Red Hat, esiste anche per Ansible Tower il relativo progetto community. 
+In questo caso il progetto è chiamato AWX e lo possiamo trovare su github al link [github.com/ansible/awx](https://github.com/ansible/awx).
+
+Differisci da Ansible Tower sia per il livello di supporto, unicamente quello della comunity, che per i metodi di installazione, ossia AWX ha come metodo di installazione ufficiale unicamente quello mediante container (che siano gestiti manualmente o in un contesto più elaborato con Openshift).
