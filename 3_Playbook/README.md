@@ -64,8 +64,10 @@ L'uso di più plays all'interno dello stesso playbook serve nel caso in cui si v
 I playbook vengono eseguiti tramite il comando `ansible-playbook`.
 
 ```bash
-$ ansible-playbook webserver -i inventory playbook.yml
+$ ansible-playbook -i inventory playbook.yml
 ```
+
+[![asciicast](https://asciinema.org/a/Va7O8Q5EmozVP9syWkvz7tUgi.svg)](https://asciinema.org/a/Va7O8Q5EmozVP9syWkvz7tUgi)
 
 ### Become
 

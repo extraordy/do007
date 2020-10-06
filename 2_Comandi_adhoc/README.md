@@ -57,20 +57,20 @@ interessate, possono essere organizzate in gruppi per facilitarne la gestione,
 è anche possibile definire gruppi di gruppi come nell'esempio sottostante
 
 ```ini
-[webserverA:]
+[webserversA]
 webserverA1
 10.101.11.23
 
-[webserverB:]
+[webserversB]
 webserverB1
 10.101.12.25
 
 [proxies]
 10.1.0.[1-2]
 
-[webserver:children]
-webserverA
-webserverB
+[webservers:children]
+webserversA
+webserversB
 ```
 
 ## Cosa sono, come si usano
@@ -99,15 +99,17 @@ Il comando ping viene utilizzato per controllare l’effettiva presenza delle
 macchine in inventory e verificarne la raggiungibilità da parte del _control node_.
 
 ```bash
-$ ansible webserverA1 -i inventory -m ping
-10.101.11.22 | SUCCESS => {
+$ ansible -i inventory webserverA1 -m ping
+webserverA1 | SUCCESS => {
     "ansible_facts": {
-        "discovered_interpreter_python": "/usr/bin/python"
+        "discovered_interpreter_python": "/usr/bin/python3"
     },
     "changed": false,
     "ping": "pong"
 }
 ```
+
+[![asciicast](https://asciinema.org/a/wfx5cQqNmdvLGlX6kfg5P1P0E.svg)](https://asciinema.org/a/wfx5cQqNmdvLGlX6kfg5P1P0E)
 
 ### Collezione dei _facts_
 Ansible, all'avvio di un playbook, esegue automaticamente un task per ottenere maggiori informazioni sugli host che verranno manipolati.  
@@ -117,19 +119,19 @@ La rappresentazione grezza di questi dati può essere stampata a schermo tramite
 
 ```bash
 $ ansible proxies -i inventory -m setup
-10.1.0.1 | SUCCESS => {
+10.1.0.2 | SUCCESS => {
     "ansible_facts": {
         "ansible_all_ipv4_addresses": [
-            "10.1.0.1"
+            "10.1.0.2"
         ],
         "ansible_apparmor": {
             "status": "disabled"
         },
 [...]
-10.1.0.2 | SUCCESS => {
+10.1.0.1 | SUCCESS => {
     "ansible_facts": {
         "ansible_all_ipv4_addresses": [
-            "10.1.0.2"
+            "10.1.0.1"
         ],
         "ansible_apparmor": {
             "status": "disabled"
