@@ -80,8 +80,7 @@ Andiamo a verificare che il server sia stato configurato correttamente.
 Managed by Ansible! HOST: serverc.lab.example.com
 ```
 
-[![asciicast](https://asciinema.org/a/WHPjdqsYyghoqX2H9PZ5AN2F0.svg)](https://asciinema.org/a/WHPjdqsYyghoqX2H9PZ5AN2F0)
-
+[![asciicast](https://asciinema.org/a/364034.svg)](https://asciinema.org/a/364034)
 
 
 
