@@ -289,4 +289,4 @@ Teniamo sempre presente che quando richiamiamo un ruolo tramite un plabyook, Ans
 
 Andiamo a valorizzare il placeholder "*\<HOST>*" e siamo pronti per lanciare il ruolo.
 
-[![asciicast](https://asciinema.org/a/9xDgmhbNHAtx4wksufYEXLaqi.svg)](https://asciinema.org/a/9xDgmhbNHAtx4wksufYEXLaqi)
+[![asciicast](https://asciinema.org/a/364154.svg)](https://asciinema.org/a/364154)
