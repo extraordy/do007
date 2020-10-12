@@ -78,4 +78,3 @@ Lo stesso script può essere lanciato con alcuni argomenti, elencati di seguito:
   `-b DATABSE BACKUP`\
   `-r DATABASE RESTORE`\
   `-h HELP`
->>>>>>> 7a35b88... Merge Ansible Tower
