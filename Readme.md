@@ -4,7 +4,7 @@
 # DO007
 ## Ansible Essentials: Simplicity in Automation Technical Overview
 
-Questo repository è relativo al riassunto di quanto trattato alla Technical Overview del corso [DO007](do007.it) fatto da [Extraordy](extraordy.it).
+Questo repository è relativo al riassunto di quanto trattato alla Technical Overview del corso [DO007](https://www.do007.it) tenuto dagli instructor di [EXTRAORDY](https://www.extraordy.com).
 
 ## Indice degli argomenti
 
