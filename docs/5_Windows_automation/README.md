@@ -1,6 +1,6 @@
 # Windows automation
 
-Forse non tutti sanno che Ansible è in grado gestire il deployment e il provisionig dei sistemi operativi Microsoft Windows. Sempore più sistemisti, infatti, predilgono l Anible per l'automation della maggior parte dei processi IT, proprio per svincolarsi da quelle che sono le soluzioni verticali e proprietarie degli specifici ambienti e poter così attingere risorse e conoscenza dall'enorme community open source.
+Forse non tutti sanno che Ansible è in grado gestire il deployment e il provisionig dei sistemi operativi Microsoft Windows. Sempore più sistemisti, infatti, predilgono Ansible per l'automation della maggior parte dei processi IT. Questo permette di svincolarsi da quelle che sono le soluzioni verticali e proprietarie degli specifici ambienti e poter così attingere risorse e conoscenza dall'enorme community open source.
 
 Quando il nostro managed host non è una macchina UNIX, dobbiamo però avere delle accortezze particolari. In questa aritcolo proveremo a riassumere gli step fondamentali.
 
@@ -8,15 +8,17 @@ Quando il nostro managed host non è una macchina UNIX, dobbiamo però avere del
 
 ### La connessione (non è SSH)
 
-Conclusa un'installaizone di default di Windows non ci troviamo certo un server SSH installato. Per questa ragione si è scelto di utilizzare **WinRM**, un protocollo di gestione basato su HTTP. Non è un protocollo per la login remota interattiva come SSH, anche se comunque il supporto ad OpenSSH è in test.
+Conclusa un'installaizone di default di Windows non ci troviamo certo un server SSH installato. Per questa ragione si è scelto di utilizzare **WinRM**, un protocollo di gestione basato su HTTP.
+
+N.B.: Non è un protocollo per la login remota interattiva come SSH.
 
 Lato Ansible, bisognerà impostare il plugin di connessione `winrm` anziché quello di default (`smart`).
 
 ### PowerShell e .NET Framework
 
-I moduli Ansible che andremo ad utilizzare non sono gli stessi che abbiamo visto finora per UNIX. Questo non perché un modulo non possa essere scritto per supprtare sistemi operativi diversi, ma proprio perché su Windows cambia il modo con cui sono implemetati i moduli. Ad esempio, non essendoci installato Python di default, è stato scelto di scrivere i moduli in **PowerShell**.
+I moduli Ansible che andremo ad utilizzare non sono gli stessi che abbiamo visto finora per UNIX. Questo non perché un modulo non possa essere scritto per supprtare sistemi operativi diversi, ma proprio perché su Windows cambia il modo (e il linguaggio) con cui sono implemetati. Ad esempio, non essendoci installato Python di default, è stato scelto di scrivere i moduli in **PowerShell**.
 
-PowerShell è il linguaggio giusto perché è perfettamente integrato in Windows e il suo interprete *conosce* tutti gli stati e le estensioni del sistema operativo, facilitando il lavoro di chi sviluppa codice. Per alcuni moduli particolari inoltre, è necessario anche avere .NET Framework come dipendenza.
+PowerShell è il linguaggio giusto perché è perfettamente integrato in Windows; il suo interprete *conosce* tutti gli stati e le estensioni del sistema operativo, facilitando il lavoro di chi sviluppa codice. Per alcuni moduli particolari inoltre, è necessario anche avere .NET Framework come dipendenza.
 
 ## Cosa cambia?
 
@@ -42,7 +44,7 @@ N.B: In un ambiente di produzione, ovviamente, sarà bene non ignorare la `ansib
 
 ### Requisiti minimi
 
-Tutte le versioni attualemnte supportate da Winsows (sia supporto regalorae che extended) possono esserre autmatizzate da Ansible. Alcune versioni però, come Windows Server 2008 o Windows 7, hanno bisogno dell'aggiornamento della PowerShell e del .NET Framework. Da Windows Server 2012 e da Windows 8 invece, tutte le dipendenze a livello di software sono già spoddisfatte dopo l'installaizone iniziale.
+Tutte le versioni attualemnte supportate da Windows (sia supporto regalorae che extended) possono esserre autmatizzate da Ansible. Alcune versioni però, come Windows Server 2008 o Windows 7, hanno bisogno dell'aggiornamento della PowerShell e del .NET Framework. Da Windows Server 2012 e da Windows 8 invece, tutte le dipendenze a livello di software sono già soddisfatte dopo l'installazione iniziale.
 
 I requisiti minimi sono seguenti:
 
@@ -68,11 +70,11 @@ Qui di seguito è disponbile uno screencast che riproduce l'esecuzione dello scr
 
 In questo paragrafo proponiamo alcuni esempi di moduli Ansible per Windows. Questi moduli avranno sempre il prefisso `win_` per indicare proprio la diversa implementazione, solitamente in PowerShell.
 
-Se per qualche funzionalità sistemistica Windows non esistesse lo specifico modulo nativo Ansible, probabilemnte esisterà una specifica risorsa **DSC**. DSC è un'estensione della PowerShell (Desired State Configuration), che aggiunge l'idempotenza per una particolare componente di Windows. Il modulo `win_dsc` permette proprio di sfruttare tutto il mondo DSC da Ansible. 
+Se per qualche funzionalità sistemistica Windows non esistesse lo specifico modulo nativo Ansible, probabilemnte esisterà una specifica risorsa **DSC**. DSC è un'estensione della PowerShell (Desired State Configuration) che aggiunge l'idempotenza per una particolare componente di Windows. Il modulo `win_dsc` permette proprio di sfruttare tutto il mondo DSC da Ansible. 
 
 ### Installazione delle applicazioni
 
-Di seguito proviamo a riepilogare i metodi di installazione supprtati da Ansible su Windows allo stato attuale (Ansible 2.9):
+Di seguito proviamo a riepilogare i metodi di installazione supportati da Ansible su Windows allo stato attuale (Ansible 2.9):
 
 - Windows Store → non automatizzabile
   - è in sviluppo il supporto a Windows Package Manager
@@ -90,7 +92,7 @@ Qui di seguito è disponbile uno screencast che riproduce l'installazione di Fil
 
 ### Windows Update
 
-La gestione degli aggiornamenti di Windows Update può essere automatizzata con il modulo `win_updates`, magari scremando per categorie (Security, Critical) e aggiungere una wihitelist o una blacklist dei pacchetti:
+La gestione degli aggiornamenti di Windows Update può essere automatizzata con il modulo `win_updates`, magari scremando per categorie (Security, Critical) e aggiungendo una wihitelist o una blacklist dei pacchetti:
 
 ```
 - win_updates:
@@ -105,7 +107,7 @@ La gestione degli aggiornamenti di Windows Update può essere automatizzata con 
 
 ### Windows Registry
 
-Abbiamo a disposizione sia il modulo `win_regedit` per lavorare in modo idempotente su una singola chiave, oppure possiamo apllicare il classico file reg tramite il modulo `win_regmerge`:
+Abbiamo a disposizione sia il modulo `win_regedit` per lavorare in modo idempotente su una singola chiave, oppure possiamo applicare il classico file reg tramite il modulo `win_regmerge`:
 
 ```
 - win_regedit:
