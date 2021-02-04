@@ -14,7 +14,7 @@ La documentazione è possibile trovarla sotto `docs/`, qui sotto l'indice degli 
 - [2 - Comandi ad hoc](docs/2_Comandi_adhoc/README.md)
 - [3 - I Playbook](docs/3_Playbook/README.md)
 - [4 - I Roles](docs/4_Roles/README.md)
-- 5 - Windows Automation
+- [5 - Windows Automation](docs/5_Windows_automation/README.md)
 - [6 - Ansible Tower](docs/6_Ansible_Tower/README.md)
 
 
