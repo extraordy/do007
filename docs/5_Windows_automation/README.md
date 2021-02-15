@@ -1,6 +1,6 @@
 # Windows automation
 
-Forse non tutti sanno che Ansible è in grado gestire il deployment e il provisionig dei sistemi operativi Microsoft Windows. Sempore più sistemisti, infatti, predilgono Ansible per l'automation della maggior parte dei processi IT. Questo permette di svincolarsi da quelle che sono le soluzioni verticali e proprietarie degli specifici ambienti e poter così attingere risorse e conoscenza dall'enorme community open source.
+Forse non tutti sanno che Ansible è in grado gestire il deployment e il provisionig dei sistemi operativi Microsoft Windows. Sempre più sistemisti infatti, predilgono Ansible per l'automation della maggior parte dei processi IT. Questo permette di svincolarsi da quelle che sono le soluzioni verticali e proprietarie degli specifici ambienti e poter così attingere risorse e conoscenza dall'enorme community open source.
 
 Quando il nostro managed host non è una macchina UNIX, dobbiamo però avere delle accortezze particolari. In questa aritcolo proveremo a riassumere gli step fondamentali.
 
@@ -8,7 +8,7 @@ Quando il nostro managed host non è una macchina UNIX, dobbiamo però avere del
 
 ### La connessione (non è SSH)
 
-Conclusa un'installaizone di default di Windows non ci troviamo certo un server SSH installato. Per questa ragione si è scelto di utilizzare **WinRM**, un protocollo di gestione basato su HTTP.
+Conclusa un'installazione di default di Windows non ci troviamo certo un server SSH installato. Per questa ragione si è scelto di utilizzare **WinRM**, un protocollo di gestione basato su HTTP.
 
 N.B.: Non è un protocollo per la login remota interattiva come SSH.
 
@@ -16,15 +16,15 @@ Lato Ansible, bisognerà impostare il plugin di connessione `winrm` anziché que
 
 ### PowerShell e .NET Framework
 
-I moduli Ansible che andremo ad utilizzare non sono gli stessi che abbiamo visto finora per UNIX. Questo non perché un modulo non possa essere scritto per supprtare sistemi operativi diversi, ma proprio perché su Windows cambia il modo (e il linguaggio) con cui sono implemetati. Ad esempio, non essendoci installato Python di default, è stato scelto di scrivere i moduli in **PowerShell**.
+I moduli Ansible che andremo a utilizzare non sono gli stessi che abbiamo visto finora per UNIX. Questo non perché un modulo non possa essere scritto per supportare sistemi operativi diversi, ma proprio perché su Windows cambia il modo (e il linguaggio) con cui è implementato. Per esempio, non essendo installato Python di default, è stato scelto di scrivere i moduli in **PowerShell**.
 
-PowerShell è il linguaggio giusto perché è perfettamente integrato in Windows; il suo interprete *conosce* tutti gli stati e le estensioni del sistema operativo, facilitando il lavoro di chi sviluppa codice. Per alcuni moduli particolari inoltre, è necessario anche avere .NET Framework come dipendenza.
+PowerShell è il linguaggio giusto perché è perfettamente integrato in Windows; il suo interprete *conosce* tutti gli stati e le estensioni del sistema operativo, facilitando il lavoro di chi sviluppa codice. Per alcuni moduli particolari inoltre è necessario anche avere .NET Framework come dipendenza.
 
 ## Cosa cambia?
 
 ### L'inventory
 
-Se il nostro progetto insiste interamente su macchine Windows, andremo a specificare variabili come `ansible_connection` a livello globale. Altrimenti, possiamo definire le opzioni necessrie direttamente nell'inventory come nell'esempio seguente:
+Se il nostro progetto insiste interamente su macchine Windows, andremo a specificare variabili come `ansible_connection` a livello globale. Altrimenti, possiamo definire le opzioni necessarie direttamente nell'inventory come nell'esempio seguente:
 
 ```
 [winhosts]
@@ -44,7 +44,7 @@ N.B: In un ambiente di produzione, ovviamente, sarà bene non ignorare la `ansib
 
 ### Requisiti minimi
 
-Tutte le versioni attualemnte supportate da Windows (sia supporto regalorae che extended) possono esserre autmatizzate da Ansible. Alcune versioni però, come Windows Server 2008 o Windows 7, hanno bisogno dell'aggiornamento della PowerShell e del .NET Framework. Da Windows Server 2012 e da Windows 8 invece, tutte le dipendenze a livello di software sono già soddisfatte dopo l'installazione iniziale.
+Tutte le versioni attualmente supportate da Windows (con supporto sia regolare che extended) possono essere autmatizzate da Ansible. Alcune versioni però, come Windows Server 2008 o Windows 7, hanno bisogno dell'aggiornamento della PowerShell e del .NET Framework. Da Windows Server 2012 e da Windows 8 invece, tutte le dipendenze a livello di software sono già soddisfatte dopo l'installazione iniziale.
 
 I requisiti minimi sono seguenti:
 
@@ -57,10 +57,11 @@ I requisiti minimi sono seguenti:
 Nonstante componenti come WinRM siano già presenti di default a partire da Windpows Server 2012, è necessario configurare alcune risorse aggiuntive:
 
 - un WinRM listener
-- le regole del firewall per accettare traffico HTTP in ingresso (neessarie per WinRM)
+- le regole del firewall per accettare traffico HTTP in ingresso (necessarie per WinRM)
 - il backend di autenticazione da utilizzare
 
-In un ambiente di produzione, sarà necessario gestire tutte queste confiurazioni magari tramite Sysprep o comunque con la soluzione di installazione automatizzata del proprio parco macchine Windows. Per un ambiente di test invece, è disponibile uno scrip in grado di apportare tutte le configurazioni necessarie ad Ansible per potersi collegare all'host. Lo script si chiama **[ConfigureRemotingForAnsible.ps1](https://github.com/ansible/ansible/blob/devel/examples/scripts/ConfigureRemotingForAnsible.ps1)** ed è liberamente scaricabile da GitHub.
+In un ambiente di produzione, sarà necessario gestire tutte queste confiurazioni magari tramite Sysprep o comunque con la soluzione di installazione automatizzata del proprio parco macchine Windows. Per un ambiente di test invece, è disponibile uno script in grado di apportare tutte le configurazioni necessarie ad Ansible per potersi collegare all'host. 
+Lo script si chiama **[ConfigureRemotingForAnsible.ps1](https://github.com/ansible/ansible/blob/devel/examples/scripts/ConfigureRemotingForAnsible.ps1)** ed è liberamente scaricabile da GitHub.
 
 Qui di seguito è disponbile uno screencast che riproduce l'esecuzione dello script di installazione:
 
@@ -70,7 +71,7 @@ Qui di seguito è disponbile uno screencast che riproduce l'esecuzione dello scr
 
 In questo paragrafo proponiamo alcuni esempi di moduli Ansible per Windows. Questi moduli avranno sempre il prefisso `win_` per indicare proprio la diversa implementazione, solitamente in PowerShell.
 
-Se per qualche funzionalità sistemistica Windows non esistesse lo specifico modulo nativo Ansible, probabilemnte esisterà una specifica risorsa **DSC**. DSC è un'estensione della PowerShell (Desired State Configuration) che aggiunge l'idempotenza per una particolare componente di Windows. Il modulo `win_dsc` permette proprio di sfruttare tutto il mondo DSC da Ansible. 
+Se per qualche funzionalità sistemistica Windows non esistesse lo specifico modulo nativo Ansible, probabilmente esisterà una specifica risorsa **DSC**. DSC è un'estensione della PowerShell (Desired State Configuration) che aggiunge l'idempotenza per una particolare componente di Windows. Il modulo `win_dsc` permette proprio di sfruttare tutto il mondo DSC da Ansible. 
 
 ### Installazione delle applicazioni
 
@@ -121,7 +122,7 @@ Abbiamo a disposizione sia il modulo `win_regedit` per lavorare in modo idempote
 
 ### Servizi
 
-Esattamente come il modulo `service` lavora ad alto livello della gestione dei servizi nei vari sistemi operativi UNIX, il modulo `win_service` si occupa nello spoecifico della gestione e dell'interrogazione dei servizi di Windows.
+Esattamente come il modulo `service` lavora ad alto livello nella gestione dei servizi nei vari sistemi operativi UNIX, il modulo `win_service` si occupa nello specifico della gestione e dell'interrogazione dei servizi Windows.
 
 In particolare, è possibile agire sullo stato attuale del servizio:
 
